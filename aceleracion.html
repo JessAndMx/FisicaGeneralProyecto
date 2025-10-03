@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Aceleración - Física General</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #2d2d2d;
+            border-radius: 20px;
+            padding: 30px 40px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #4a90e2;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 180px 150px 200px 1fr;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        label {
+            color: #e0e0e0;
+            font-size: 1em;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            font-size: 1em;
+            width: 100%;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #5da3f5;
+            background-color: #454545;
+        }
+
+        select {
+            padding: 10px;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            font-size: 0.95em;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #5da3f5;
+        }
+
+        .conversion-label {
+            color: #ff8c42;
+            font-size: 0.95em;
+            font-weight: 600;
+            padding: 8px;
+            background-color: #3a3a3a;
+            border-radius: 6px;
+            border: 1px solid #555;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-convertir {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .btn-convertir:hover {
+            background-color: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-calcular {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .btn-calcular:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-borrar {
+            background-color: #e67e22;
+            color: white;
+        }
+
+        .btn-borrar:hover {
+            background-color: #d35400;
+            transform: translateY(-2px);
+        }
+
+        .btn-regresar {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        .btn-regresar:hover {
+            background-color: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 900px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .button-container {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calcular Aceleración</h1>
+
+        <div class="form-grid">
+            <label>Velocidad inicial:</label>
+            <input type="text" id="velocidadInicial" placeholder="0.0">
+            <select id="unidadVI">
+                <option>metros / segundos</option>
+                <option>metros / minutos</option>
+                <option>kilometros / horas</option>
+                <option>Kilometros / minutos</option>
+            </select>
+            <div class="conversion-label" id="conversionVI">Velocidad Inicial</div>
+        </div>
+
+        <div class="form-grid">
+            <label>Velocidad final:</label>
+            <input type="text" id="velocidadFinal" placeholder="0.0">
+            <select id="unidadVF">
+                <option>metros / segundos</option>
+                <option>metros / minutos</option>
+                <option>kilometros / horas</option>
+                <option>Kilometros / minutos</option>
+            </select>
+            <div class="conversion-label" id="conversionVF">Velocidad Final</div>
+        </div>
+
+        <div class="form-grid">
+            <label>Tiempo:</label>
+            <input type="text" id="tiempo" placeholder="0.0">
+            <select id="unidadTiempo">
+                <option>Horas</option>
+                <option>Minutos</option>
+                <option>Segundos</option>
+            </select>
+            <div class="conversion-label" id="conversionTiempo">Tiempo</div>
+        </div>
+
+        <div class="result-box" id="resultado">Aceleración:</div>
+
+        <div class="button-container">
+            <button class="btn-convertir" onclick="convertir()">Convertir</button>
+            <button class="btn-calcular" onclick="calcular()">Calcular</button>
+            <button class="btn-borrar" onclick="borrar()">Borrar</button>
+            <button class="btn-regresar" onclick="regresar()">Regresar</button>
+        </div>
+    </div>
+
+    <script>
+        function convertir() {
+            try {
+                // Obtener valores ingresados
+                let vi = parseFloat(document.getElementById('velocidadInicial').value.replace(',', '.'));
+                let vf = parseFloat(document.getElementById('velocidadFinal').value.replace(',', '.'));
+                let t = parseFloat(document.getElementById('tiempo').value.replace(',', '.'));
+
+                // Unidades seleccionadas
+                let unidadVI = document.getElementById('unidadVI').value;
+                let unidadVF = document.getElementById('unidadVF').value;
+                let unidadTiempo = document.getElementById('unidadTiempo').value;
+
+                // Convertir velocidad inicial a m/s
+                if (unidadVI === "metros / segundos") {
+                    vi = vi;
+                } else if (unidadVI === "metros / minutos") {
+                    vi = vi / 60.0;
+                } else if (unidadVI === "kilometros / horas") {
+                    vi = vi * 1000.0 / 3600.0;
+                } else if (unidadVI === "Kilometros / minutos") {
+                    vi = vi * 1000.0 / 60.0;
+                }
+
+                // Convertir velocidad final a m/s
+                if (unidadVF === "metros / segundos") {
+                    vf = vf;
+                } else if (unidadVF === "metros / minutos") {
+                    vf = vf / 60.0;
+                } else if (unidadVF === "kilometros / horas") {
+                    vf = vf * 1000.0 / 3600.0;
+                } else if (unidadVF === "Kilometros / minutos") {
+                    vf = vf * 1000.0 / 60.0;
+                }
+
+                // Convertir tiempo a segundos
+                if (unidadTiempo === "Segundos") {
+                    t = t;
+                } else if (unidadTiempo === "Minutos") {
+                    t = t * 60.0;
+                } else if (unidadTiempo === "Horas") {
+                    t = t * 3600.0;
+                }
+
+                // Mostrar conversiones
+                document.getElementById('conversionVI').textContent = `VI: ${vi.toFixed(3)} m/s`;
+                document.getElementById('conversionVF').textContent = `VF: ${vf.toFixed(3)} m/s`;
+                document.getElementById('conversionTiempo').textContent = `t: ${t.toFixed(3)} s`;
+
+                // Guardar los valores convertidos en los campos para el cálculo
+                document.getElementById('velocidadInicial').value = vi.toFixed(3);
+                document.getElementById('velocidadFinal').value = vf.toFixed(3);
+                document.getElementById('tiempo').value = t.toFixed(3);
+
+            } catch (error) {
+                alert('Ingresa valores válidos para convertir');
+            }
+        }
+
+        function calcular() {
+            try {
+                let vi = parseFloat(document.getElementById('velocidadInicial').value.replace(',', '.'));
+                let vf = parseFloat(document.getElementById('velocidadFinal').value.replace(',', '.'));
+                let t = parseFloat(document.getElementById('tiempo').value.replace(',', '.'));
+
+                if (t <= 0) {
+                    alert('El tiempo debe ser mayor a 0');
+                    return;
+                }
+
+                // Fórmula de aceleración: a = (vf - vi) / t
+                let a = (vf - vi) / t;
+                document.getElementById('resultado').textContent = `Aceleración: ${a.toFixed(3)} m/s²`;
+
+            } catch (error) {
+                alert('Ingresa valores válidos');
+            }
+        }
+
+        function borrar() {
+            document.getElementById('velocidadInicial').value = '';
+            document.getElementById('velocidadFinal').value = '';
+            document.getElementById('tiempo').value = '';
+            document.getElementById('resultado').textContent = 'Aceleración:';
+            document.getElementById('conversionVI').textContent = 'Velocidad Inicial';
+            document.getElementById('conversionVF').textContent = 'Velocidad Final';
+            document.getElementById('conversionTiempo').textContent = 'Tiempo';
+        }
+
+        function regresar() {
+            window.location.href = 'menu.html';
+        }
+    </script>
+</body>
+</html>

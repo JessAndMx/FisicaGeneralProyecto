@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú - Física General</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Física General</h1>
+        <h2>Menú Principal</h2>
+
+        <div class="menu-grid">
+            <button class="menu-button" onclick="abrirPagina('velocidad.html')">📊 Velocidad</button>
+            <button class="menu-button" onclick="abrirPagina('aceleracion.html')">🚀 Aceleración</button>
+            <button class="menu-button" onclick="abrirPagina('distancia.html')">📏 Distancia</button>
+            <button class="menu-button" onclick="abrirPagina('tiempo.html')">⏱️ Tiempo</button>
+            <button class="menu-button" onclick="abrirPagina('definiciones.html')">📖 Definiciones</button>
+            <button class="menu-button" onclick="window.open('ManualDeUsuario.pdf', '_blank')">🤔 Manual</button>
+        </div>
+
+        <div class="bottom-buttons">
+            <button class="secondary-button" onclick="window.location.href='index.html'">⬅️ Presentación</button>
+            <button class="secondary-button exit-button" onclick="salir()">❌ Salir</button>
+        </div>
+    </div>
+
+    <script>
+        function abrirPagina(pagina) {
+            window.location.href = pagina;
+        }
+
+            function salir() {
+            if (confirm('¿Estás seguro de que deseas salir?')) {
+                window.close();
+                window.location.href = 'about:blank';
+            }
+        }
+    </script>
+</body>
+</html>

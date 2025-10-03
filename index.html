@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Física General</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>TECNOLÓGICO NACIONAL DE MÉXICO</h1>
+        <h2>Instituto Tecnológico del Istmo</h2>
+        
+        <h3>Ingeniería En Sistemas Computacionales</h3>
+        
+        <div class="subtitle">- FÍSICA GENERAL -</div>
+        
+        <p class="student-info">Alumnos:</p>
+        <p class="student-info">Andrade Sanchez Jose de Jesus - 24190386</p>
+        <p class="student-info">Toledo Jimenez Luis Angel - 24190308</p>
+        
+        <p class="semester-info">Semestre: 3° Grupo: "O"</p>
+        
+        <div class="button-container">
+            <button onclick="window.location.href='menu.html'">➡️ Ir al menú</button>
+            <button onclick="salir()">❌ Salir</button>
+        </div>
+    </div>
+
+    <script>
+        function salir() {
+            if (confirm('¿Estás seguro de que deseas salir?')) {
+                window.close();
+                window.location.href = 'about:blank';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Distancia - Física General</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #2d2d2d;
+            border-radius: 20px;
+            padding: 30px 40px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #4a90e2;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 120px 100px 180px 1fr;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #e0e0e0;
+            font-size: 1em;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            font-size: 1em;
+            width: 100%;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #5da3f5;
+            background-color: #454545;
+        }
+
+        select {
+            padding: 10px;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            font-size: 0.95em;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #5da3f5;
+        }
+
+        .conversion-box {
+            color: #ff8c42;
+            font-size: 0.95em;
+            font-weight: 600;
+            padding: 12px;
+            background-color: #3a3a3a;
+            border-radius: 8px;
+            border: 1px solid #555;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.6;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-convertir {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .btn-convertir:hover {
+            background-color: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-calcular {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .btn-calcular:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-borrar {
+            background-color: #e67e22;
+            color: white;
+        }
+
+        .btn-borrar:hover {
+            background-color: #d35400;
+            transform: translateY(-2px);
+        }
+
+        .btn-regresar {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        .btn-regresar:hover {
+            background-color: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 800px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .button-container {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calcular la Distancia</h1>
+
+        <div class="form-grid">
+            <label>Velocidad:</label>
+            <input type="text" id="velocidad" placeholder="0.0">
+            <select id="unidadVelocidad">
+                <option>Kilometros/Hora</option>
+                <option>Kilometros/Minutos</option>
+                <option>Metros/Hora</option>
+                <option>Metros/Minutos</option>
+                <option>Metros/Segundos</option>
+            </select>
+            <div class="conversion-box" id="conversionBox"></div>
+        </div>
+
+        <div class="form-grid">
+            <label>Tiempo:</label>
+            <input type="text" id="tiempo" placeholder="0.0">
+            <select id="unidadTiempo">
+                <option>Horas</option>
+                <option>Minutos</option>
+                <option>Segundos</option>
+            </select>
+            <div></div>
+        </div>
+
+        <div class="result-box" id="resultado">Distancia:</div>
+
+        <div class="button-container">
+            <button class="btn-convertir" onclick="convertir()">Convertir</button>
+            <button class="btn-calcular" onclick="calcular()">Calcular</button>
+            <button class="btn-borrar" onclick="borrar()">Borrar</button>
+            <button class="btn-regresar" onclick="regresar()">Regresar</button>
+        </div>
+    </div>
+
+    <script>
+        function convertir() {
+            try {
+                let velocidad = parseFloat(document.getElementById('velocidad').value.replace(',', '.'));
+                let unidadVel = document.getElementById('unidadVelocidad').value;
+                let v = 0;
+
+                switch (unidadVel) {
+                    case "Kilometros/Hora":
+                        v = velocidad * 1000.0 / 3600.0;
+                        break;
+                    case "Kilometros/Minutos":
+                        v = velocidad * 1000.0 / 60.0;
+                        break;
+                    case "Metros/Hora":
+                        v = velocidad / 3600.0;
+                        break;
+                    case "Metros/Minutos":
+                        v = velocidad / 60.0;
+                        break;
+                    case "Metros/Segundos":
+                        v = velocidad;
+                        break;
+                    default:
+                        alert("Selecciona una unidad válida de velocidad.");
+                        return;
+                }
+
+                let tiempo = parseFloat(document.getElementById('tiempo').value.replace(',', '.'));
+                let unidadTiempo = document.getElementById('unidadTiempo').value;
+                let t = 0;
+
+                switch (unidadTiempo) {
+                    case "Horas":
+                        t = tiempo * 3600.0;
+                        break;
+                    case "Minutos":
+                        t = tiempo * 60.0;
+                        break;
+                    case "Segundos":
+                        t = tiempo;
+                        break;
+                    default:
+                        alert("Selecciona una unidad válida de tiempo.");
+                        return;
+                }
+
+                document.getElementById('conversionBox').innerHTML = 
+                    `Velocidad: ${v.toFixed(2)} m/s<br>Tiempo: ${t.toFixed(2)} s`;
+
+            } catch (error) {
+                alert('Ingresa valores numéricos válidos.');
+            }
+        }
+
+        function calcular() {
+            try {
+                let velocidad = parseFloat(document.getElementById('velocidad').value.replace(',', '.'));
+                let unidadVel = document.getElementById('unidadVelocidad').value;
+                let v = 0;
+
+                switch (unidadVel) {
+                    case "Kilometros/Hora":
+                        v = velocidad * 1000.0 / 3600.0;
+                        break;
+                    case "Kilometros/Minutos":
+                        v = velocidad * 1000.0 / 60.0;
+                        break;
+                    case "Metros/Hora":
+                        v = velocidad / 3600.0;
+                        break;
+                    case "Metros/Minutos":
+                        v = velocidad / 60.0;
+                        break;
+                    case "Metros/Segundos":
+                        v = velocidad;
+                        break;
+                    default:
+                        alert("Selecciona una unidad válida de velocidad.");
+                        return;
+                }
+
+                let tiempo = parseFloat(document.getElementById('tiempo').value.replace(',', '.'));
+                let unidadTiempo = document.getElementById('unidadTiempo').value;
+                let t = 0;
+
+                switch (unidadTiempo) {
+                    case "Horas":
+                        t = tiempo * 3600.0;
+                        break;
+                    case "Minutos":
+                        t = tiempo * 60.0;
+                        break;
+                    case "Segundos":
+                        t = tiempo;
+                        break;
+                    default:
+                        alert("Selecciona una unidad válida de tiempo.");
+                        return;
+                }
+
+                // Fórmula: d = v * t
+                let d = v * t;
+                document.getElementById('resultado').textContent = `Distancia: ${d.toFixed(2)} m`;
+
+            } catch (error) {
+                alert('Ingresa valores numéricos válidos.');
+            }
+        }
+
+        function borrar() {
+            document.getElementById('velocidad').value = '';
+            document.getElementById('tiempo').value = '';
+            document.getElementById('conversionBox').innerHTML = '';
+            document.getElementById('resultado').textContent = 'Distancia:';
+        }
+
+        function regresar() {
+            window.location.href = 'menu.html';
+        }
+    </script>
+</body>
+</html>
